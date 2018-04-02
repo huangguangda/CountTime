@@ -14,13 +14,14 @@ import android.widget.TimePicker;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText inputet;
-    private Button getTime,startTime,stopTime;
+    private Button getTime, startTime, stopTime;
     private TextView time;
     private int i = 0;
     private Timer timer = null;
     private TimerTask task = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         inputet = findViewById(R.id.inputtime);
         getTime = findViewById(R.id.gettime);
         startTime = findViewById(R.id.starttime);
@@ -38,9 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startTime.setOnClickListener(this);
         stopTime.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.gettime:
                 time.setText(inputet.getText().toString());
                 i = Integer.parseInt(inputet.getText().toString());
@@ -51,30 +53,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.stoptime:
                 stopTime();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
-    private Handler mHandler = new Handler(){
-        public void handleMessage(Message msg){
-            time.setText(msg.arg1+"");
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            time.setText(msg.arg1 + "");
             startTime();
         };
     };
-    public void startTime(){
+
+    public void startTime() {
         timer = new Timer();
-        task = new TimerTask(){
+        task = new TimerTask() {
 
             @Override
             public void run() {
-                i--;
-                Message message = mHandler.obtainMessage();
-                message.arg1 = i;
-                mHandler.sendMessage(message);
+                if (i > 0) {
+                    i--;
+                    Message message = mHandler.obtainMessage();
+                    message.arg1 = i;
+                    mHandler.sendMessage(message);
+                }
             }
         };
-        timer.schedule(task,1000);
+        timer.schedule(task, 1000);
     }
+
     public void stopTime(){
         timer.cancel();
     }
