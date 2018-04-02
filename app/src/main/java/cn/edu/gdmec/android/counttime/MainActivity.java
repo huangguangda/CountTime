@@ -5,12 +5,9 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -71,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void run() {
+                //加入判断不能小于0
                 if (i > 0) {
                     i--;
                     Message message = mHandler.obtainMessage();
